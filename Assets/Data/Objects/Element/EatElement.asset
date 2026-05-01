@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 856bf1a67f4e8f94db8624cc16dd52ae, type: 3}
-  m_Name: VoidElement
+  m_Name: EatElement
   m_EditorClassIdentifier: Assembly-CSharp::ElementData
-  id: V
-  elementName: Void
-  color: {r: 0, g: 0, b: 0, a: 1}
+  id: 
+  elementName: Eat
+  color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
   isIndestructible: 1
   isObstacle: 1

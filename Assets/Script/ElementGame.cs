@@ -2,36 +2,41 @@ using UnityEngine;
 
 public class ElementGame : MonoBehaviour
 {
-    public ElementData element;
+    public ElementData actualElement;
+    public ElementData defaultElement;
+    public ElementData removeElement;
     public SpriteRenderer SpriteRenderer;
     void Start()
     {
-        Refresh(element);
+        Refresh(defaultElement, true);
     }
-
-    public void Refresh(ElementData newElement)
+    
+    public void Refresh(ElementData newElement, bool isNewElement = false)
     {
-        element = newElement;
+        if(isNewElement) defaultElement = newElement;
         
-        if (element.id == "S")
+        actualElement = newElement;
+        
+        
+        if (actualElement.id == "S")
         {
             GameManager.instance.AddStart(this);
         }
-        else if (element.id == "E")
+        else if (actualElement.id == "E")
         {
             GameManager.instance.AddEnd(this);
         }
         
-        SpriteRenderer.color = element.color;
+        SpriteRenderer.color = actualElement.color;
     }
 
-    void CreatePlayer()
+    public void Remove()
     {
-        
+        Refresh(removeElement);
     }
 
-    void EndLevel()
+    public void Back()
     {
-        gameObject.tag = "EndLevel";
+        Refresh(defaultElement);
     }
 }

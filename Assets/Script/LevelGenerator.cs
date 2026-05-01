@@ -27,7 +27,7 @@ public class LevelGenerator : DefaultGenerator
 
                 if (elementGame != null)
                 {
-                    elementGame.Refresh(Decripter(code[index].ToString()));
+                    elementGame.Refresh(Decripter(code[index].ToString()), true);
                 }
                 
                 _startPos.x += generatorData.margeLigne;

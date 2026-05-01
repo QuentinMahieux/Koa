@@ -7,8 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveDistance;
     public Rigidbody2D rb;
-    
-    public List<Vector3> positionsHistoirques =  new List<Vector3>();
+
+    public List<Historique> historiques = new List<Historique>();
     void Start()
     {
         
@@ -21,33 +21,29 @@ public class PlayerMovement : MonoBehaviour
             var vector3 = transform.position;
             vector3.y += moveDistance;
             rb.MovePosition(vector3);
-            AddPosition(vector3);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             var vector3 = transform.position;
             vector3.y -= moveDistance;
             rb.MovePosition(vector3);
-            AddPosition(vector3);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             var vector3 = transform.position;
             vector3.x += moveDistance;
             rb.MovePosition(vector3);
-            AddPosition(vector3);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             var vector3 = transform.position;
             vector3.x -= moveDistance;
             rb.MovePosition(vector3);
-            AddPosition(vector3);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            RemovePosition(rb.position);
+            RemovePosition();
         }
     }
 
@@ -56,25 +52,46 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other.name);
-        if (other.gameObject.GetComponent<ElementGame>().element.id == "V")
+        ElementGame elementGame = other.gameObject.GetComponent<ElementGame>();
+        
+        if(!elementGame) return;
+        
+        if(!elementGame.actualElement.isObstacle)
         {
-            RemovePosition(other.gameObject.transform.position);
+            PlayerPalindrome.instance.AddPattern(elementGame.actualElement);
+            AddPosition(rb.position, elementGame);
         }
         else
         {
-            PlayerPalindrome.instance.AddPattern(other.gameObject.GetComponent<ElementGame>().element);
+            AddPosition(rb.position, elementGame);
+            RemovePosition();
         }
+        
+        if(!elementGame.actualElement.isIndestructible) elementGame.Remove();
     }
 
-    void AddPosition(Vector3 position)
+    void AddPosition(Vector3 position, ElementGame element)
     {
-        positionsHistoirques.Add(position);
+        historiques.Add(new Historique());
+        historiques[^1].lastElement = element;
+        historiques[^1].lastPosition = position;
     }
 
-    void RemovePosition(Vector3 position)
+    void RemovePosition()
     {
-        if(positionsHistoirques.Count == 0) return;
-        positionsHistoirques.Remove(position);
-        transform.position = positionsHistoirques[^1];
+        if(historiques.Count <= 0) return;
+        
+        historiques[^1].lastElement.Back();
+        
+        historiques.RemoveAt(historiques.Count - 1);
+        transform.position = historiques[^1].lastPosition;
     }
+}
+
+[System.Serializable]
+public class Historique
+{
+    public ElementGame lastElement;
+    public Vector3 lastPosition;
+
 }

@@ -6,4 +6,8 @@ public class ElementData : ScriptableObject
     public string id = "A";
     public string elementName;
     public Color color;
+
+    [Header("Special Element")] 
+    public bool isIndestructible;
+    public bool isObstacle;
 }
