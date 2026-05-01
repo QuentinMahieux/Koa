@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ElementStudio : MonoBehaviour
+public class ElementGame : MonoBehaviour
 {
     public ElementData element;
     public SpriteRenderer SpriteRenderer;
@@ -12,16 +12,26 @@ public class ElementStudio : MonoBehaviour
     public void Refresh(ElementData newElement)
     {
         element = newElement;
-
+        
         if (element.id == "S")
         {
-            LevelMaker.instance.ChangeStart(this);
+            GameManager.instance.AddStart(this);
         }
         else if (element.id == "E")
         {
-            LevelMaker.instance.ChangeEnd(this);
+            GameManager.instance.AddEnd(this);
         }
         
         SpriteRenderer.color = element.color;
+    }
+
+    void CreatePlayer()
+    {
+        
+    }
+
+    void EndLevel()
+    {
+        gameObject.tag = "EndLevel";
     }
 }

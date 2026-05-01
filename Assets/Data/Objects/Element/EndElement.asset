@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3f9007e92f150e46a83eb9108731856, type: 3}
-  m_Name: LevelData
-  m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: 
-  creatorName: 
-  tablers:
-  - Ligne: []
-  code: 
+  m_Script: {fileID: 11500000, guid: 856bf1a67f4e8f94db8624cc16dd52ae, type: 3}
+  m_Name: EndElement
+  m_EditorClassIdentifier: Assembly-CSharp::ElementData
+  id: E
+  elementName: End
+  color: {r: 0.6311976, g: 1, b: 0.5943395, a: 1}

@@ -2,16 +2,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class LevelMaker : MonoBehaviour
+public class LevelMaker : DefaultGenerator
 {
     public static LevelMaker instance;
-    [Header("Tabler")]
-    public int nbrLigne = 6;
-    public int nbrColone = 6;
-    public float margeLigne = 1.4f;
-    public float margeColone = 1.4f;
-    
-    public Vector2 startPos;
     public GameObject placeHolder;
 
     [Header("Interface")] 
@@ -22,6 +15,10 @@ public class LevelMaker : MonoBehaviour
     public ElementData voidElement;
     [HideInInspector] public ElementData actualElement;
     public List<TablerStudio> tablerStudios;
+
+    [Header("Special Condition")] 
+    public ElementStudio start;
+    public ElementStudio end;
 
     void Awake()
     {
@@ -46,19 +43,19 @@ public class LevelMaker : MonoBehaviour
 
     void NewTabler()
     {
-        Vector2 _startPos = startPos;
+        Vector2 _startPos = generatorData.startPos;
         tablerStudios =  new List<TablerStudio>();
-        for (int i = 0; i < nbrColone; i++)
+        for (int i = 0; i < generatorData.nbrColone; i++)
         {
             tablerStudios.Add(new TablerStudio());
-            for (int j = 0; j < nbrLigne; j++)
+            for (int j = 0; j < generatorData.nbrLigne; j++)
             {
                 GameObject element = Instantiate(placeHolder, new Vector3(_startPos.x, _startPos.y, 0), Quaternion.identity);
                 tablerStudios[^1].lignes.Add(element.GetComponentInChildren<ElementStudio>());
-                _startPos.x +=  margeLigne;
+                _startPos.x +=  generatorData.margeLigne;
             }
-            _startPos.x = startPos.x;
-            _startPos.y += margeColone;
+            _startPos.x = generatorData.startPos.x;
+            _startPos.y += generatorData.margeColone;
         }
     }
 
@@ -87,6 +84,12 @@ public class LevelMaker : MonoBehaviour
 
     public void CreateNewLevel()
     {
+        if (!start || !end)
+        {
+            Debug.LogError("LevelMaker cannot create new level");
+            return;
+        }
+        
         LevelData levelData = ScriptableObject.CreateInstance<LevelData>();
         for (int i = 0; i < tablerStudios.Count; i++)
         {
@@ -104,6 +107,18 @@ public class LevelMaker : MonoBehaviour
         AssetDatabase.Refresh();
         Debug.Log("Level Created");
         #endif
+    }
+
+    public void ChangeStart(ElementStudio element)
+    {
+        if(start) start.Refresh(voidElement);
+        start = element;
+    }
+
+    public void ChangeEnd(ElementStudio element)
+    {
+        if(end) end.Refresh(voidElement);
+        end = element;
     }
 }
 [System.Serializable]
