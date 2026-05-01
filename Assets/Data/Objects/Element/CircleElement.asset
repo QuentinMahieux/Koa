@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElementData
   id: O
   elementName: Circle
-  color: {r: 1, g: 0.043342937, b: 0.03459108, a: 0}
+  color: {r: 1, g: 0.043342937, b: 0.03459108, a: 1}

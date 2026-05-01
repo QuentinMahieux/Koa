@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElementData
   id: T
   elementName: Triangle
-  color: {r: 1, g: 0.82132435, b: 0, a: 0}
+  color: {r: 1, g: 0.83487463, b: 0.035294116, a: 1}
