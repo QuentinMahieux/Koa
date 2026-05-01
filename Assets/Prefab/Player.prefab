@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffda32b153136514d9826b9f4ad627db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPalindrome
-  maxTaille: 4
+  maxTaille: 5
   patterns: []
 --- !u!114 &340484275743061257
 MonoBehaviour:

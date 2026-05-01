@@ -6,6 +6,10 @@ public class PlayerPalindrome : MonoBehaviour
     public static PlayerPalindrome instance;
     public int maxTaille = 2;
     public List<ElementData> patterns = new List<ElementData>();
+
+    [Header("Interface")] 
+    public GameObject parentUniquePattern;
+    public List<InterfaceUniquePattern> uniquePatterns = new List<InterfaceUniquePattern>();
     
     void Awake()
     {
@@ -31,6 +35,13 @@ public class PlayerPalindrome : MonoBehaviour
         for (int i = 0; i < maxTaille; i++)
         {
             patterns.Add(null);
+        }
+        
+        uniquePatterns.Clear();
+        foreach (InterfaceUniquePattern uniquePattern in parentUniquePattern.GetComponentsInChildren<InterfaceUniquePattern>())
+        {
+            uniquePattern.Remove();
+            uniquePatterns.Add(uniquePattern);
         }
     }
     
