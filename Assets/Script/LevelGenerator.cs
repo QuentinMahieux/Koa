@@ -28,7 +28,7 @@ public class LevelGenerator : DefaultGenerator
         NewTabler(levelData.code);
     }
 
-    void NewTabler(string code)
+    public void NewTabler(string code)
     {
         int index = 0;
         Vector2 _startPos = generatorData.startPos;

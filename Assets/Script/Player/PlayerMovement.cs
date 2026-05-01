@@ -53,6 +53,11 @@ public class PlayerMovement : MonoBehaviour
         ElementGame elementGame = other.gameObject.GetComponent<ElementGame>();
         
         if(!elementGame) return;
+
+        if (elementGame.actualElement.id == "E")
+        {
+            
+        }
         
         if(!elementGame.actualElement.isObstacle)
         {

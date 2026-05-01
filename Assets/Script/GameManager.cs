@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,9 @@ public class GameManager : MonoBehaviour
     [Header("Level")] 
     public ElementGame start;
     public ElementGame end;
+    
+    public List<LevelData> levels;
+    public int actualLevel = 0;
     
     void Awake()
     {
@@ -38,6 +42,13 @@ public class GameManager : MonoBehaviour
     public void AddEnd(ElementGame element)
     {
         end = element;
+    }
+
+    public void NextLevel()
+    {
+        actualLevel++;
+        if(actualLevel > levels.Count) return;
+        LevelGenerator.instance.NewTabler(levels[actualLevel].code);
     }
 
     public void GameOver(bool newGameOver)
