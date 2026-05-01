@@ -52,10 +52,10 @@ public class LevelMaker : DefaultGenerator
             {
                 GameObject element = Instantiate(placeHolder, new Vector3(_startPos.x, _startPos.y, 0), Quaternion.identity);
                 tablerStudios[^1].lignes.Add(element.GetComponentInChildren<ElementStudio>());
-                _startPos.x +=  generatorData.margeLigne;
+                _startPos.x +=  generatorData.marge;
             }
             _startPos.x = generatorData.startPos.x;
-            _startPos.y += generatorData.margeColone;
+            _startPos.y += generatorData.marge;
         }
     }
 

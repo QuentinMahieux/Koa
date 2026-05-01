@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     [Header("Player")]
     public GameObject player;
 
+    [Header("Game")]
+    public bool isGameOver;
+    
     [Header("Level")] 
     public ElementGame start;
     public ElementGame end;
@@ -22,6 +25,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Multiple GameManager script attached to " + gameObject.name);
             Destroy(this);
         }
+
     }
 
     public void AddStart(ElementGame element)
@@ -34,5 +38,10 @@ public class GameManager : MonoBehaviour
     public void AddEnd(ElementGame element)
     {
         end = element;
+    }
+
+    public void GameOver(bool newGameOver)
+    {
+        isGameOver = newGameOver;
     }
 }
