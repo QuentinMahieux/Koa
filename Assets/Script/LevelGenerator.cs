@@ -1,20 +1,34 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : DefaultGenerator
 {
+    public static LevelGenerator instance;
     public LevelData levelData;
     public GameObject placeHolder;
     
     public List<ElementData> elements;
-    
-    
+
+    void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple LevelGenerator script attached to " + gameObject.name);
+            Destroy(this);
+        }
+    }
+
     void Start()
     {
         NewTabler(levelData.code);
     }
 
-    void NewTabler(string code)
+    public void NewTabler(string code)
     {
         int index = 0;
         Vector2 _startPos = generatorData.startPos;
@@ -30,11 +44,11 @@ public class LevelGenerator : DefaultGenerator
                     elementGame.Refresh(Decripter(code[index].ToString()), true);
                 }
                 
-                _startPos.x += generatorData.margeLigne;
+                _startPos.x += generatorData.marge;
                 index++;
             }
             _startPos.x = generatorData.startPos.x;
-            _startPos.y += generatorData.margeColone;
+            _startPos.y += generatorData.marge;
         }
     }
 

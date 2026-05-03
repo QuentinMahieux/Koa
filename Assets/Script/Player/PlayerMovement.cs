@@ -5,56 +5,59 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveDistance;
     public Rigidbody2D rb;
-
     public List<Historique> historiques = new List<Historique>();
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            RemovePosition();
+            PlayerPalindrome.instance.RemovePattern();
+
+            GameManager.instance.GameOver(!PlayerPalindrome.instance.DetectPalindrome(PlayerPalindrome.instance.patterns));
+        }
+        
+        if(GameManager.instance.isGameOver) return;
+        
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             var vector3 = transform.position;
-            vector3.y += moveDistance;
+            vector3.y += LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             var vector3 = transform.position;
-            vector3.y -= moveDistance;
+            vector3.y -= LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             var vector3 = transform.position;
-            vector3.x += moveDistance;
+            vector3.x += LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             var vector3 = transform.position;
-            vector3.x -= moveDistance;
+            vector3.x -= LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            RemovePosition();
         }
     }
 
-
-
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other.name);
         ElementGame elementGame = other.gameObject.GetComponent<ElementGame>();
         
         if(!elementGame) return;
+
+        if (elementGame.actualElement.id == "E")
+        {
+            
+        }
         
         if(!elementGame.actualElement.isObstacle)
         {

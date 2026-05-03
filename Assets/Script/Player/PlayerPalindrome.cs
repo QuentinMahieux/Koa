@@ -36,18 +36,25 @@ public class PlayerPalindrome : MonoBehaviour
         {
             patterns.Add(null);
         }
-        
+
+        int index = 0;
         uniquePatterns.Clear();
         foreach (InterfaceUniquePattern uniquePattern in parentUniquePattern.GetComponentsInChildren<InterfaceUniquePattern>())
         {
-            uniquePattern.Remove();
-            uniquePatterns.Add(uniquePattern);
+            if (index < maxTaille)
+            {
+                uniquePattern.gameObject.SetActive(true);
+                uniquePattern.Remove();
+                uniquePatterns.Add(uniquePattern);
+            }
+            else uniquePattern.gameObject.SetActive(false);
+            index++;
         }
     }
     
     public void AddPattern(ElementData pattern)
     {
-        if(pattern.id == "S" || pattern.id == "E") return;
+        if(pattern.isIndestructible) return;
         
         for (int i = 0; i < patterns.Count; i++)
         {
@@ -55,13 +62,17 @@ public class PlayerPalindrome : MonoBehaviour
             {
                 patterns[i] =  pattern;
                 
+                uniquePatterns[i].Add(pattern);
+                
                 if (DetectPalindrome(patterns))
                 {
+                    GameManager.instance.GameOver(false);
                     Debug.Log("Palindrome");
                 }
                 else
                 {
-                    Debug.Log("Do not Palindrome");
+                    GameManager.instance.GameOver(true);
+                    Debug.Log("💀 Game Over");
                 }
                 
                 break;
@@ -74,8 +85,21 @@ public class PlayerPalindrome : MonoBehaviour
             }
         }
     }
+
+    public void RemovePattern()
+    {
+        for (int i = patterns.Count - 1; i >= 0; i--)
+        {
+            if (patterns[i])
+            {
+                patterns[i] = null;
+                uniquePatterns[i].Remove();
+                return;
+            }
+        }
+    }
     
-    bool DetectPalindrome(List<ElementData> newPattern)
+    public bool DetectPalindrome(List<ElementData> newPattern)
     {
         string palindromeTest = "";
         foreach (ElementData element in newPattern)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelMaker : DefaultGenerator
 {
     public static LevelMaker instance;
+    public GameObject parentLevelElement;
     public GameObject placeHolder;
 
     [Header("Interface")] 
@@ -37,25 +38,27 @@ public class LevelMaker : DefaultGenerator
     {
         NewTabler();
         InstanciateInterface();
-        
-        
     }
 
     void NewTabler()
     {
         Vector2 _startPos = generatorData.startPos;
         tablerStudios =  new List<TablerStudio>();
+        foreach (ElementGame element in parentLevelElement.GetComponentsInChildren<ElementGame>())
+        {
+            Destroy(element.gameObject);
+        }
         for (int i = 0; i < generatorData.nbrColone; i++)
         {
             tablerStudios.Add(new TablerStudio());
             for (int j = 0; j < generatorData.nbrLigne; j++)
             {
-                GameObject element = Instantiate(placeHolder, new Vector3(_startPos.x, _startPos.y, 0), Quaternion.identity);
+                GameObject element = Instantiate(placeHolder,new Vector3(_startPos.x, _startPos.y, 0), Quaternion.identity, parentLevelElement.transform);
                 tablerStudios[^1].lignes.Add(element.GetComponentInChildren<ElementStudio>());
-                _startPos.x +=  generatorData.margeLigne;
+                _startPos.x +=  generatorData.marge;
             }
             _startPos.x = generatorData.startPos.x;
-            _startPos.y += generatorData.margeColone;
+            _startPos.y += generatorData.marge;
         }
     }
 
