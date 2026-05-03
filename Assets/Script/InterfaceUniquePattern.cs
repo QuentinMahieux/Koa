@@ -11,7 +11,7 @@ public class InterfaceUniquePattern : MonoBehaviour
     {
         element = newElement;
 
-        image.color = element.color;
+        image.sprite = element.sprite;
     }
 
     public void Remove()

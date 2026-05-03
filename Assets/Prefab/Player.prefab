@@ -85,8 +85,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.98826313, b: 0.76415086, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c7e5b7d66c627204a8e0c8ccd24a20aa, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -109,6 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPalindrome
   maxTaille: 5
   patterns: []
+  parentUniquePattern: {fileID: 0}
+  uniquePatterns: []
 --- !u!114 &340484275743061257
 MonoBehaviour:
   m_ObjectHideFlags: 0

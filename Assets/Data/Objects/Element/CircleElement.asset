@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElementData
   id: O
   elementName: Circle
-  color: {r: 1, g: 0.043342937, b: 0.03459108, a: 1}
+  sprite: {fileID: 21300000, guid: a87ba6eab7f99844c98e3036773fbdc7, type: 3}
+  isIndestructible: 0
+  isObstacle: 0

@@ -5,7 +5,7 @@ public class ElementData : ScriptableObject
 {
     public string id = "A";
     public string elementName;
-    public Color color;
+    public Sprite sprite;
 
     [Header("Special Element")] 
     public bool isIndestructible;

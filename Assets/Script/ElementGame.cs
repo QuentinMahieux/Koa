@@ -27,7 +27,7 @@ public class ElementGame : MonoBehaviour
             GameManager.instance.AddEnd(this);
         }
         
-        SpriteRenderer.color = actualElement.color;
+        SpriteRenderer.sprite = actualElement.sprite;
     }
 
     public void Remove()

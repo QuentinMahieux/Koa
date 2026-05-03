@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElementData
   id: C
   elementName: Cube
-  color: {r: 0.06859269, g: 0.035294116, b: 1, a: 1}
+  sprite: {fileID: 21300000, guid: e425630cc6be42a4ead4a9176e6ec19b, type: 3}
+  isIndestructible: 0
+  isObstacle: 0

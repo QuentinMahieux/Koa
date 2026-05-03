@@ -22,6 +22,6 @@ public class ElementStudio : MonoBehaviour
             LevelMaker.instance.ChangeEnd(this);
         }
         
-        SpriteRenderer.color = element.color;
+        SpriteRenderer.sprite = element.sprite;
     }
 }

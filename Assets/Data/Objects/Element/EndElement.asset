@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElementData
   id: E
   elementName: End
-  color: {r: 0.6311976, g: 1, b: 0.5943395, a: 1}
+  sprite: {fileID: 21300000, guid: 6d36e762275f7b74abfc3be363e5cc9e, type: 3}
   isIndestructible: 1
   isObstacle: 0

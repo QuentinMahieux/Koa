@@ -12,7 +12,7 @@ public class ButtonChoiceElement : MonoBehaviour
     {
         elementData = newElementData;
         
-        buttonImage.color = elementData.color;
+        buttonImage.sprite = elementData.sprite;
     }
 
     public void ApplyNewElement()
