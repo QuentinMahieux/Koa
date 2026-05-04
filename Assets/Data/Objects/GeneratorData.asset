@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GeneratorData
   nbrLigne: 6
   nbrColone: 6
-  margeLigne: 1.3
-  margeColone: 1.3
-  startPos: {x: -3.02, y: -3.58}
+  marge: 1.3
+  startPos: {x: -3.3, y: -3.58}

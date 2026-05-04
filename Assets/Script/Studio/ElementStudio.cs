@@ -6,13 +6,13 @@ public class ElementStudio : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     void Start()
     {
-        Refresh(element);
     }
 
     public void Refresh(ElementData newElement)
     {
         element = newElement;
-
+        SpriteRenderer.sprite = element.sprite;
+        
         if (element.id == "S")
         {
             LevelMaker.instance.ChangeStart(this);
@@ -22,6 +22,5 @@ public class ElementStudio : MonoBehaviour
             LevelMaker.instance.ChangeEnd(this);
         }
         
-        SpriteRenderer.sprite = element.sprite;
     }
 }

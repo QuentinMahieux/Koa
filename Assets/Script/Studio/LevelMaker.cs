@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,19 +9,24 @@ public class LevelMaker : DefaultGenerator
     public static LevelMaker instance;
     public GameObject parentLevelElement;
     public GameObject placeHolder;
+    public LevelData chargeLevelData;
 
     [Header("Interface")] 
     public GameObject buttonParent;
     
     [Header("Studio")]
-    public ElementData[] elements;
     public ElementData voidElement;
     [HideInInspector] public ElementData actualElement;
     public List<TablerStudio> tablerStudios;
 
+
+    public int partternTaille;
+
+
     [Header("Special Condition")] 
     public ElementStudio start;
     public ElementStudio end;
+    
 
     void Awake()
     {
@@ -36,11 +43,12 @@ public class LevelMaker : DefaultGenerator
     
     void Start()
     {
-        NewTabler();
+        if (GameManager.instance.levelMaker.Length != 0) NewTabler(Decoder(GameManager.instance.levelMaker));
+        else NewTabler("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
         InstanciateInterface();
     }
 
-    void NewTabler()
+    void NewTabler(string code)
     {
         Vector2 _startPos = generatorData.startPos;
         tablerStudios =  new List<TablerStudio>();
@@ -48,6 +56,9 @@ public class LevelMaker : DefaultGenerator
         {
             Destroy(element.gameObject);
         }
+        
+        int index = 0;
+        Debug.Log(code);
         for (int i = 0; i < generatorData.nbrColone; i++)
         {
             tablerStudios.Add(new TablerStudio());
@@ -55,7 +66,10 @@ public class LevelMaker : DefaultGenerator
             {
                 GameObject element = Instantiate(placeHolder,new Vector3(_startPos.x, _startPos.y, 0), Quaternion.identity, parentLevelElement.transform);
                 tablerStudios[^1].lignes.Add(element.GetComponentInChildren<ElementStudio>());
+                element.GetComponent<ElementStudio>().Refresh(LettreToElement(code[index].ToString()));
                 _startPos.x +=  generatorData.marge;
+                Debug.Log(LettreToElement(code[index].ToString()));
+                index++;
             }
             _startPos.x = generatorData.startPos.x;
             _startPos.y += generatorData.marge;
@@ -85,12 +99,12 @@ public class LevelMaker : DefaultGenerator
         actualElement = element;
     }
 
-    public void CreateNewLevel()
+    public string CreateNewLevel()
     {
         if (!start || !end)
         {
             Debug.LogError("LevelMaker cannot create new level");
-            return;
+            return null;
         }
         
         LevelData levelData = ScriptableObject.CreateInstance<LevelData>();
@@ -103,13 +117,20 @@ public class LevelMaker : DefaultGenerator
                 levelData.code += tablerStudios[i].lignes[j].element.id;
             }
         }
+
+        levelData.code = $"[{editPlayerName.text}]{{{editLevelName.text}}}({partternTaille}){levelData.code}";
         
         #if UNITY_EDITOR
-        AssetDatabase.CreateAsset(levelData, AssetDatabase.GenerateUniqueAssetPath("Assets/Data/Objects/Level.asset"));
+        AssetDatabase.CreateAsset(levelData, AssetDatabase.GenerateUniqueAssetPath("Assets/Data/Objects/Level/Level.asset"));
+        
+        AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(levelData), levelName.text + "Data");
+        
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log("Level Created");
         #endif
+        
+        return levelData.code;
     }
 
     public void ChangeStart(ElementStudio element)

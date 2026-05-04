@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerPalindrome : MonoBehaviour
 {
     public static PlayerPalindrome instance;
-    public int maxTaille = 2;
+    public int maxTaille;
     public List<ElementData> patterns = new List<ElementData>();
+    public List<Pull> historicPulls = new List<Pull>();
 
     [Header("Interface")] 
     public GameObject parentUniquePattern;
@@ -26,6 +28,7 @@ public class PlayerPalindrome : MonoBehaviour
 
     void Start()
     {
+        maxTaille = LevelGenerator.instance.taille;
         Reset();
     }
 
@@ -67,18 +70,20 @@ public class PlayerPalindrome : MonoBehaviour
                 if (DetectPalindrome(patterns))
                 {
                     GameManager.instance.GameOver(false);
-                    Debug.Log("Palindrome");
+                    PlayerMovement.instance.gameOver.SetActive(false);
                 }
                 else
                 {
                     GameManager.instance.GameOver(true);
-                    Debug.Log("💀 Game Over");
+                    PlayerMovement.instance.gameOver.SetActive(true);
                 }
                 
                 break;
             }
             if (i == patterns.Count - 1 && patterns[i])
             {
+                AudioManager.instance.PlayPatternComplet();
+                AddPull(patterns);
                 Reset();
                 AddPattern(pattern);
                 return;
@@ -88,15 +93,39 @@ public class PlayerPalindrome : MonoBehaviour
 
     public void RemovePattern()
     {
+        bool isFind = false;
         for (int i = patterns.Count - 1; i >= 0; i--)
         {
-            if (patterns[i])
+            if (patterns[i] && !isFind)
             {
                 patterns[i] = null;
                 uniquePatterns[i].Remove();
-                return;
+                isFind =  true;
             }
         }
+
+        if (historicPulls.Count > 0 && CountPattern(patterns) == 0)
+        {
+            foreach (ElementData element in historicPulls[^1].elements)
+            {
+                AddPattern(element);
+            }
+            historicPulls.Remove(historicPulls[^1]);
+        }
+    }
+
+    public int CountPattern(List<ElementData> listPatterns)
+    {
+        int count = 0;
+        foreach (ElementData element in listPatterns)
+        {
+            if (element)
+            {
+                count++;
+            }
+        }
+        Debug.Log(count);
+        return count;
     }
     
     public bool DetectPalindrome(List<ElementData> newPattern)
@@ -114,7 +143,6 @@ public class PlayerPalindrome : MonoBehaviour
             }
         }
         
-        Debug.Log(palindromeTest);
         
         for (int i = 0; i < palindromeTest.Length; i++)
         {
@@ -125,4 +153,19 @@ public class PlayerPalindrome : MonoBehaviour
         }
         return true;
     }
+
+    public void AddPull(List<ElementData> newPull)
+    {
+        historicPulls.Add(new Pull());
+        foreach (ElementData element in newPull)
+        {
+            historicPulls[^1].elements.Add(element);
+        }
+    }
+}
+
+[Serializable]
+public class Pull
+{
+    public List<ElementData> elements = new List<ElementData>();
 }

@@ -1,15 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelGenerator : DefaultGenerator
 {
     public static LevelGenerator instance;
-    public LevelData levelData;
+    public GameObject tabler;
     public GameObject placeHolder;
     
-    public List<ElementData> elements;
-
+    public int taille;
+    
+    public bool isTesingZone;
+    
     void Awake()
     {
         if (!instance)
@@ -23,13 +29,23 @@ public class LevelGenerator : DefaultGenerator
         }
     }
 
-    void Start()
+    private void Start()
     {
-        NewTabler(levelData.code);
+        if (!isTesingZone)
+        {
+            NewTabler(GameManager.instance.levels[GameManager.instance.actualLevel].code);
+            taille = DecoderPattern(GameManager.instance.levels[GameManager.instance.actualLevel].code);
+        }
+        else
+        {
+            NewTabler(GameManager.instance.levelMaker);
+            taille = DecoderPattern(GameManager.instance.levelMaker);
+        }
     }
 
     public void NewTabler(string code)
     {
+        seed = Decoder(code);
         int index = 0;
         Vector2 _startPos = generatorData.startPos;
         for (int i = 0; i < generatorData.nbrColone; i++)
@@ -39,9 +55,9 @@ public class LevelGenerator : DefaultGenerator
                 GameObject element = Instantiate(placeHolder, new Vector3(_startPos.x, _startPos.y, 0), Quaternion.identity);
                 ElementGame elementGame = element.GetComponent<ElementGame>();
 
-                if (elementGame != null)
+                if (elementGame != null && index < seed.Length)
                 {
-                    elementGame.Refresh(Decripter(code[index].ToString()), true);
+                    elementGame.Refresh(LettreToElement(seed[index].ToString()), true);
                 }
                 
                 _startPos.x += generatorData.marge;
@@ -51,18 +67,4 @@ public class LevelGenerator : DefaultGenerator
             _startPos.y += generatorData.marge;
         }
     }
-
-    ElementData Decripter(string letter)
-    {
-        foreach (ElementData data in elements)
-        {
-            if (data.id == letter)
-            {
-                return data;
-            }
-        }
-        Debug.LogError("Element not found: " + letter);
-        return null;
-    }
-    
 }

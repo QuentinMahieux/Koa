@@ -89,4 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterfaceUniquePattern
   element: {fileID: 0}
+  noElementSprite: {fileID: 21300000, guid: 1013bc833f8e93f4388f270c274dbec9, type: 3}
   image: {fileID: 8695377386042404394}

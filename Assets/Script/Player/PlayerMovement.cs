@@ -5,9 +5,30 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement instance;
     public Rigidbody2D rb;
     public List<Historique> historiques = new List<Historique>();
 
+    [Header("Visual")]
+    public SpriteRenderer spriteRenderer;
+    public Sprite spriteRL;
+    public Sprite spriteUD;
+    
+    [Header("Game Over")]
+    public GameObject gameOver;
+    
+    void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple PlayerMovement script attached to " + gameObject.name);
+            Destroy(this);
+        }
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -25,38 +46,49 @@ public class PlayerMovement : MonoBehaviour
             var vector3 = transform.position;
             vector3.y += LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
+            
+            spriteRenderer.sprite = spriteUD;
+            spriteRenderer.flipY = false;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             var vector3 = transform.position;
             vector3.y -= LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
+            
+            spriteRenderer.sprite = spriteUD;
+            spriteRenderer.flipY = true;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             var vector3 = transform.position;
             vector3.x += LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
+            
+            spriteRenderer.sprite = spriteRL;
+            spriteRenderer.flipX = false;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             var vector3 = transform.position;
             vector3.x -= LevelGenerator.instance.generatorData.marge;
             rb.MovePosition(vector3);
+            
+            spriteRenderer.sprite = spriteRL;
+            spriteRenderer.flipX = true;
         }
     }
 
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
         ElementGame elementGame = other.gameObject.GetComponent<ElementGame>();
         
         if(!elementGame) return;
 
         if (elementGame.actualElement.id == "E")
         {
-            
+            GameManager.instance.NextLevel();
         }
         
         if(!elementGame.actualElement.isObstacle)
@@ -83,6 +115,8 @@ public class PlayerMovement : MonoBehaviour
     void RemovePosition()
     {
         if(historiques.Count <= 0) return;
+        
+        gameOver.SetActive(false);
         
         historiques[^1].lastElement.Back();
         

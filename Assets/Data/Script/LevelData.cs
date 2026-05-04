@@ -4,10 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelData", menuName = "Scriptable Objects/LevelData")]
 public class LevelData : ScriptableObject
 {
-    public string levelName;
-    public string creatorName;
     
-    public List<Tabler>  tablers =  new List<Tabler>();
+    [HideInInspector] public List<Tabler>  tablers =  new List<Tabler>();
 
     [Header("MetaData")] 
     public string code;

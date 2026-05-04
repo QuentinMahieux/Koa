@@ -17,7 +17,8 @@ public class ElementGame : MonoBehaviour
         
         actualElement = newElement;
         
-        
+        SpriteRenderer.sprite = actualElement.sprite;
+
         if (actualElement.id == "S")
         {
             GameManager.instance.AddStart(this);
@@ -27,11 +28,11 @@ public class ElementGame : MonoBehaviour
             GameManager.instance.AddEnd(this);
         }
         
-        SpriteRenderer.sprite = actualElement.sprite;
     }
 
     public void Remove()
     {
+        AudioManager.instance.PlayEat();
         Refresh(removeElement);
     }
 

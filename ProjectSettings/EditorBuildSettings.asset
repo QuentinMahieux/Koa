@@ -6,8 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: fd7f97846e65c7e4494dc8170a7a5dd5
+  - enabled: 1
     path: Assets/Scenes/LevelMaker.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 2f2d41a64d9dc0048aa2b9db898e25fb
+  - enabled: 1
+    path: Assets/Scenes/MakerTest.unity
+    guid: f6319b1b997d2ee4786b8c0f8c94994e
+  - enabled: 1
+    path: Assets/Scenes/GameCustom.unity
+    guid: 29881ceeeab8ab647acaebd0223e9cdf
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

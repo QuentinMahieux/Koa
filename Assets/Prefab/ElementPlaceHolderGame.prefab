@@ -105,7 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7819f7bd3813314fb9fed8c3484aeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElementGame
-  element: {fileID: 11400000, guid: 2efc321f036277d4eb17070df412fd86, type: 2}
+  actualElement: {fileID: 11400000, guid: 2efc321f036277d4eb17070df412fd86, type: 2}
+  defaultElement: {fileID: 11400000, guid: 2efc321f036277d4eb17070df412fd86, type: 2}
   removeElement: {fileID: 11400000, guid: 9c4cd86d92fc3da488f59bd9769eeca7, type: 2}
   SpriteRenderer: {fileID: 1335379957356620531}
 --- !u!61 &7886663008573305816

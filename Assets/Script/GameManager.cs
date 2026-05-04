@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class GameManager : MonoBehaviour
     
     public List<LevelData> levels;
     public int actualLevel = 0;
+
+    [Header("LevelMaker")] 
+    public string levelMaker;
     
     void Awake()
     {
@@ -29,14 +33,16 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Multiple GameManager script attached to " + gameObject.name);
             Destroy(this);
         }
-
+        DontDestroyOnLoad(gameObject);
     }
 
     public void AddStart(ElementGame element)
     {
         if(start) return;
         start = element;
-        Instantiate(player, start.transform.position, Quaternion.identity);
+        if (PlayerPalindrome.instance) PlayerPalindrome.instance.gameObject.transform.position = start.gameObject.transform.position;
+        else Instantiate(player, start.transform.position, Quaternion.identity);
+        
     }
 
     public void AddEnd(ElementGame element)
@@ -47,9 +53,16 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         actualLevel++;
-        if(actualLevel > levels.Count) return;
-        LevelGenerator.instance.NewTabler(levels[actualLevel].code);
+        if(actualLevel > levels.Count)
+        {
+            PauseMenu.instance.Quit();
+            return;
+        }
+        
+        AudioManager.instance.PlayFinish();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    
 
     public void GameOver(bool newGameOver)
     {

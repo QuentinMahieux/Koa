@@ -4,8 +4,14 @@ using UnityEngine.UI;
 public class InterfaceUniquePattern : MonoBehaviour
 {
     public ElementData element;
+    public Sprite noElementSprite;
     
     public Image image;
+
+    void Start()
+    {
+        image.sprite = noElementSprite;
+    }
 
     public void Add(ElementData newElement)
     {
@@ -18,7 +24,7 @@ public class InterfaceUniquePattern : MonoBehaviour
     {
         element = null;
         
-        image.color = Color.white;
+        image.sprite = noElementSprite;
     }
     
 }
