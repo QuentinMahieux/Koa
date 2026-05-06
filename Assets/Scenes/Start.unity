@@ -336,6 +336,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2779065691039924190, guid: 66789fb9013180b499d0e93877542d6f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4302715635600609205, guid: 66789fb9013180b499d0e93877542d6f, type: 3}
       propertyPath: m_Camera
       value: 
@@ -820,7 +824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &327756277
 RectTransform:
   m_ObjectHideFlags: 0
